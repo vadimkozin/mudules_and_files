@@ -8,6 +8,10 @@ class Pokemon {
         console.log(` [name: '${this.name}' level: ${this.level}]`);
     }
 
+    info() {
+        return(` {"name": "${this.name}", "level:" "${this.level}"}`);
+    }
+
     valueOf() {
         return this.level;
     }
@@ -30,7 +34,7 @@ class PokemonList extends Array {
         }
         // or this.forEach(ob => ob.show());
     }
-
+  
     exist(name) {
         return (this.indexOf(name) > -1) ? true : false;
     }

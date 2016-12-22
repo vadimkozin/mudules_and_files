@@ -15,7 +15,7 @@ function mkdir(path) {
   return new Promise((resolve,reject) => {
     fs.mkdir(path, err => {
       if (err) throw err;
-      resolve('ok');    
+      resolve(path);    
     });
   });
 }
@@ -24,7 +24,7 @@ function createFile(path, content) {
   return new Promise((resolve,reject) => {
     fs.writeFile(path, content, opts, err => {
       if (err) throw err;
-      resolve('ok');
+      resolve(path);
     });
   });
 }
