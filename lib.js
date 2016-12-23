@@ -65,7 +65,7 @@ function findFile(path, nameFile) {
           resolve(file);
         } 
       });
-      reject(new Error('pass'));
+      reject(new Error('no_error'));
     });
   })
 }

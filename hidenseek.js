@@ -21,12 +21,12 @@ function hide(path, pokemonList) {
     const indexDir = randomList(0, countDir - 1, hideCount);
 
     let chain = Promise.resolve();
-    
+
     for (let i = 0, n=0; i < countDir; i++) {
       let dir = nameDirectory(i);
       chain = chain
       .then(() => emptyDir(dir))
-      .then((result) => { 
+      .then(() => { 
         if (indexDir.indexOf(i) >- 1) {
           createFile(`${dir}/${file}`, pokemonList[hideList[n++]].json()); 
         }
@@ -34,8 +34,9 @@ function hide(path, pokemonList) {
       .catch(err => { throw err });
     }
 
-    resolve(pokemonList.filter((x, i) => hideList.indexOf(i) > -1));
-
+    chain.then(() => {
+      resolve(pokemonList.filter((x, i) => hideList.indexOf(i) > -1));
+    });
   });
 }
 
@@ -52,7 +53,7 @@ function seek(path) {
       .then(result => JSON.parse(result))
       .then(ob => pokList.add(ob.name, ob.level))      
       .catch(err => { 
-        if (err.message !== 'pass') {
+        if (err.message !== 'no_error') {
            throw err; 
         }
       });
@@ -61,7 +62,7 @@ function seek(path) {
     chain.then(() => {
       resolve(pokList);
     });
-  })
+  });
 }
 
 
