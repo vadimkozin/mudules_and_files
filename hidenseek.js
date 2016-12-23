@@ -11,6 +11,8 @@ function nameDirectory(i) {
 }
 
 function hide(path, pokemonList) {
+  console.log(path);
+  pokemonList.show();
   return new Promise((resolve,reject) => {
     // нужно спрятать не более 3 и не более чем передано
     const  hideCount = Math.min(3,  pokemonList.length);
@@ -20,8 +22,8 @@ function hide(path, pokemonList) {
     const indexDir = randomList(0, countDir - 1, hideCount);
 
     let chain = Promise.resolve();
-
-    for (let i = 0, n=0; i < countDir; i++) {
+    let n = 0;
+    for (let i = 0; i < countDir; i++) {
       let dir = nameDirectory(i);
       chain = chain
       .then(() => emptyDir(dir))
