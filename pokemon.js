@@ -8,8 +8,8 @@ class Pokemon {
         console.log(` [name: '${this.name}' level: ${this.level}]`);
     }
 
-    info() {
-        return(` {"name": "${this.name}", "level:" "${this.level}"}`);
+    json() {
+        return(` {"name": "${this.name}", "level": "${this.level}"}`);
     }
 
     valueOf() {
