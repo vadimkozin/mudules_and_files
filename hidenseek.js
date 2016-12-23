@@ -2,18 +2,15 @@ const { emptyDir, twoDigits, createFile, findFile, readFile, randomList } = requ
 const PokemonList = require('./pokemon').PokemonList;
 
 const countDir = 10;          // количество папок
-const path ='./field';        // корневая папка, где прячем
 const prefix = 'data-';       // начало в названии вложенных папок
 const file = 'pokemon.txt';   // название файла для сохр. инфо о покемоне
 
-function nameDirectory(i) {
+function nameDirectory(path, i) {
   return `${path}/${prefix}${twoDigits(i)}`;
 }
 
 function hide(path, pokemonList) {
-  console.log(path);
-  pokemonList.show();
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     // нужно спрятать не более 3 и не более чем передано
     const  hideCount = Math.min(3,  pokemonList.length);
     // покемоны должны быть выбраны из списка случайным образом
@@ -24,7 +21,7 @@ function hide(path, pokemonList) {
     let chain = Promise.resolve();
     let n = 0;
     for (let i = 0; i < countDir; i++) {
-      let dir = nameDirectory(i);
+      let dir = nameDirectory(path, i);
       chain = chain
       .then(() => emptyDir(dir))
       .then(() => { 
@@ -42,12 +39,12 @@ function hide(path, pokemonList) {
 }
 
 function seek(path) {
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     let pokList = new PokemonList();
     let chain = Promise.resolve();
 
     for (let i = 0; i < countDir; i++) {
-      let dir = nameDirectory(i);
+      let dir = nameDirectory(path, i);
       chain = chain
       .then(() => findFile(dir, file))
       .then(() => readFile(dir, file))
@@ -67,7 +64,9 @@ function seek(path) {
 }
 
 if (!module.parent) {
-  let mode = 'hide';
+  let mode = '!hide';
+
+  const path ='./field';        // корневая папка, где прячем
 
   if (mode == 'hide') {
     const pok = new PokemonList();
@@ -78,7 +77,9 @@ if (!module.parent) {
     hide(path, pok)
     .then( result => result.show())
     .catch(err => console.log(err));
+  
     }
+  
   else {
     seek(path)
     .then (result => result.show())
