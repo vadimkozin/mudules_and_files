@@ -1,6 +1,5 @@
 const { emptyDir, twoDigits, createFile, findFile, readFile, randomList } = require('./lib');
 const PokemonList = require('./pokemon').PokemonList;
-const pokemons = require('./pokemons');
 
 const countDir = 10;          // количество папок
 const path ='./field';        // корневая папка, где прячем
@@ -65,21 +64,27 @@ function seek(path) {
   });
 }
 
+if (!module.parent) {
+  let mode = 'hide';
 
-let q=1;
+  if (mode == 'hide') {
+    const pok = new PokemonList();
+    require('./pokemons').forEach((item, i) => {
+      pok.add(item.name, item.level);
+    });
 
-if (q==1) {
-const pok = new PokemonList();
-require('./pokemons').forEach((item, i) => {
-  pok.add(item.name, item.level);
-});
-
-hide(path, pok)
-.then( result => result.show())
-.catch(err => console.log(err));
+    hide(path, pok)
+    .then( result => result.show())
+    .catch(err => console.log(err));
+    }
+  else {
+    seek(path)
+    .then (result => result.show())
+    .catch(err => console.log(err));
+  }
 }
-else {
-seek(path)
-.then (result => result.show())
-.catch(err => console.log(err));
+
+module.exports = {
+    hide,
+    seek
 }
