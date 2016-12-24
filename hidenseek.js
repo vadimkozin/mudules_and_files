@@ -1,4 +1,4 @@
-const { emptyDir, twoDigits, createFile, findFile, readFile, randomList } = require('./lib');
+const { emptyDir, createFile, readFile, twoDigits, randomList } = require('./lib');
 const PokemonList = require('./pokemon').PokemonList;
 
 const countDir = 10;          // количество папок
@@ -46,12 +46,12 @@ function seek(path) {
     for (let i = 0; i < countDir; i++) {
       let dir = nameDirectory(path, i);
       chain = chain
-      .then(() => findFile(dir, file))
       .then(() => readFile(dir, file))
       .then(result => JSON.parse(result))
       .then(ob => pokList.add(ob.name, ob.level))      
       .catch(err => { 
-        if (err.message !== 'no_error') {
+        if (err.code !== 'ENOENT') {
+          console.log('' + err);
            throw err; 
         }
       });
@@ -64,7 +64,7 @@ function seek(path) {
 }
 
 if (!module.parent) {
-  let mode = '!hide';
+  let mode = 'hide';
 
   const path ='./field';        // корневая папка, где прячем
 
@@ -77,7 +77,6 @@ if (!module.parent) {
     hide(path, pok)
     .then( result => result.show())
     .catch(err => console.log(err));
-  
     }
   
   else {

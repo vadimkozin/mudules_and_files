@@ -9,7 +9,7 @@ class Pokemon {
     }
 
     json() {
-        return(` {"name": "${this.name}", "level": "${this.level}"}`);
+        return(`{"name": "${this.name}", "level": "${this.level}"}`);
     }
 
     valueOf() {

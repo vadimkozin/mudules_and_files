@@ -1,4 +1,3 @@
-const { exit } =  require('process');
 const { basename }  = require('path');
 const { hide, seek } = require('./hidenseek');
 const { PokemonList } = require('./pokemon');
@@ -15,17 +14,9 @@ example:
     node ${bname} ${do_seek} ./field 
 `;
 
-
-/*
-console.log(process.argv);
-console.log('prog: ' + prog);
-console.log('what_do: ' + what_do);
-console.log('path: ' + path);
-console.log('data: ' + data);
-*/
 if ([do_hide, do_seek].indexOf(what_do) == -1 || !path) {
     console.log(help);
-    exit(1);
+    process.exit(1);
 }
 
 switch (what_do) {
@@ -38,7 +29,7 @@ switch (what_do) {
         }
         catch (err) {
             console.log(`Cannot find file: '${data}'`);
-            exit(1);
+            process.exit(1);
         }
 
         hide(path, pok)
@@ -49,7 +40,7 @@ switch (what_do) {
     case 'seek':
         seek(path)
         .then (result => result.show())
-        .catch(err => console.log(err));
+        .catch(err => console.log("ERROR: " + err));
         break;
 
     default:
