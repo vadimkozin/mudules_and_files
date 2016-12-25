@@ -6,3 +6,4 @@ used:
 example:
     node index hide ./field ./pokemons.json
     node index seek ./field
+
